@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "202626292986",
+    "project_id": "comunicate-colegios-b3e64",
+    "storage_bucket": "comunicate-colegios-b3e64.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:202626292986:android:1001207f5f7391b146bd43",
+        "android_client_info": {
+          "package_name": "com.app.comuninicateflutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "202626292986-418lsokj207hsupi2ja238s6q2te88f4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.comuninicateflutter",
+            "certificate_hash": "4c431babf63bd4524d0f1ffddb8492b0131200ac"
+          }
+        },
+        {
+          "client_id": "202626292986-2jh3fbsadlljtr7rb9uq3jkifvrr6uje.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNkWZ8829Ao9t0QWpj--Yyu9xnWGodazc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "202626292986-2jh3fbsadlljtr7rb9uq3jkifvrr6uje.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "202626292986-4o100fs4ag2kaquaoitjdbk01id4d39u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.autraliano"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:202626292986:android:c1a0f0a7934fbec046bd43",
+        "android_client_info": {
+          "package_name": "com.comunicate.autraliano"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "202626292986-2jh3fbsadlljtr7rb9uq3jkifvrr6uje.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNkWZ8829Ao9t0QWpj--Yyu9xnWGodazc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "202626292986-2jh3fbsadlljtr7rb9uq3jkifvrr6uje.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "202626292986-4o100fs4ag2kaquaoitjdbk01id4d39u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.autraliano"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

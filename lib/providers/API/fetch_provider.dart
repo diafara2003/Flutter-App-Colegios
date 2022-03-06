@@ -26,7 +26,7 @@ class Providers {
 
     Usuario _session = Usuario.fromJson(_userLogged);
     Usuario? _user = await new LoginProvider()
-        .validationUser(_session.perDocumento, _session.perClave);
+        .validationUser(_session.perUsuario, _session.perClave);
 
     if (_user != null)
       return true;

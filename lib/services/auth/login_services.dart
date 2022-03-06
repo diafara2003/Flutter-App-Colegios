@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 import 'package:autraliano/models/person.dart';
+import 'package:autraliano/models/response_models.dart';
 import 'package:autraliano/providers/API/fetch_provider.dart';
 import 'package:autraliano/providers/Session/preferencias_provider.dart';
 
@@ -44,12 +45,22 @@ class LoginProvider {
     }
   }
 
+  Future<ResponseDto> enviarClaveCorreo(String usuario) async {
+    Providers obj = new Providers();
+
+    dynamic json = await obj.getAPI('login/enviarclave?id=$usuario&empresa=4',
+        allowAnonymous: 1);
+
+    return responseDtoFromMap(json);
+  }
+
   Future<void> cambiarClave(String newClave) async {
     Providers obj = new Providers();
 
     PreferenciasUsuario _prefe = new PreferenciasUsuario();
 
     Usuario _user = Usuario.fromJson(_prefe.usuario);
+    _user.perEstado = true;
 
     _user.perClave = newClave;
 

@@ -85,10 +85,11 @@ class _RenderGruposPagesState extends State<RenderGruposPages> {
         title: textoBurbuja());
   }
 
-  Row textoBurbuja() {
+  Widget textoBurbuja() {
+    // return textoBurbujaEnviados(this.widget.acudiente);
     return Row(children: [
       Container(
-        alignment: Alignment.topLeft,
+        alignment: Alignment.center,
         child: CircleAvatar(
           backgroundColor:
               Utilities.hexToColor(this.widget.acudiente.grEnColorRgb),
@@ -101,6 +102,7 @@ class _RenderGruposPagesState extends State<RenderGruposPages> {
         ),
       ),
       Container(
+          width: 250,
           padding: EdgeInsets.only(left: 5.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -114,6 +116,7 @@ class _RenderGruposPagesState extends State<RenderGruposPages> {
                 this.widget.acudiente.tipo == -25
                     ? "${this.widget.acudiente.graDescripcion} - (${this.widget.acudiente.curDescripcion})"
                     : "(${this.widget.acudiente.curDescripcion})",
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(color: Colors.black54, fontSize: 13.0),
               )
             ],

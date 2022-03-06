@@ -3,6 +3,7 @@ import 'package:autraliano/models/destinatarios_model.dart';
 import 'package:autraliano/models/message.dart';
 import 'package:autraliano/models/person.dart';
 import 'package:autraliano/models/sent_to_models.dart';
+import 'package:autraliano/pages/common/common_message.dart';
 import 'package:autraliano/providers/Models/message_provider.dart';
 import 'package:autraliano/providers/Session/preferencias_provider.dart';
 import 'package:autraliano/services/message/messaje_services.dart';
@@ -157,7 +158,7 @@ class _ListEnvaidosPagesState extends State<ListEnvaidosPages> {
     List<Widget> _render = [];
 
     _sentTo.forEach((element) {
-      _render.add(textoBurbuja(new DestinatarioModel(
+      _render.add(textoBurbujaEnviados(new DestinatarioModel(
           perId: element.id,
           perNombres: element.nombre,
           perApellidos: element.apellido,
@@ -172,65 +173,6 @@ class _ListEnvaidosPagesState extends State<ListEnvaidosPages> {
 
     return Wrap(
       children: _render,
-    );
-  }
-
-  FittedBox textoBurbuja(DestinatarioModel element) {
-    return FittedBox(
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.black12,
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30.0),
-              bottomRight: Radius.circular(30.0),
-              topLeft: Radius.circular(40.0),
-              bottomLeft: Radius.circular(40.0)),
-        ),
-        margin: EdgeInsets.only(right: 5.0),
-        padding: EdgeInsets.only(right: element.tipo == -99 ? 0 : 5.0),
-        child: Row(children: [
-          Container(
-            alignment: Alignment.topLeft,
-            child: CircleAvatar(
-              backgroundColor: Utilities.hexToColor(element.grEnColorRgb),
-              //  backgroundColor: Colors.transparent,
-              radius: 15.0,
-              child: Text(
-                Utilities.inicialesUsuario(
-                    element.perNombres, element.perApellidos),
-                style: TextStyle(color: Colors.white70, fontSize: 14.0),
-              ),
-            ),
-          ),
-          if (element.tipo != -99)
-            Container(
-                // width: 100,
-                padding: EdgeInsets.only(left: 2.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('${element.perNombres} ${element.perApellidos}',
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontSize: 14.0,
-                            color: Utilities.hexToColor(element.grEnColorRgb))),
-                    if (element.graDescripcion != '' ||
-                        element.curDescripcion != '')
-                      Container(
-                        width: 200,
-                        child: Text(
-                          element.graDescripcion.isNotEmpty
-                              ? "${element.graDescripcion} "
-                              : "${element.curDescripcion}",
-                          overflow: TextOverflow.ellipsis,
-                          style:
-                              TextStyle(color: Colors.black54, fontSize: 11.0),
-                        ),
-                      )
-                  ],
-                )),
-        ]),
-      ),
     );
   }
 }

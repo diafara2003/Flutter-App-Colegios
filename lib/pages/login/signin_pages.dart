@@ -1,11 +1,11 @@
 import 'package:autraliano/helper/utilities.dart';
 import 'package:autraliano/models/person.dart';
+import 'package:autraliano/models/response_models.dart';
 import 'package:autraliano/pages/common/splah_screen_loading.dart';
 import 'package:autraliano/pages/message/home_message_pages.dart';
 import 'package:autraliano/services/auth/login_services.dart';
 import 'package:autraliano/services/push/push_notificacions_services.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class SignInPages extends StatefulWidget {
   static final String routeName = "signIn";
@@ -19,11 +19,13 @@ class _SignInPagesState extends State<SignInPages> {
   final formkey = GlobalKey<FormState>();
   bool isLoading = false;
   bool error = false;
+  bool isRecordarClave = false;
 
   LoginProvider authMethod = new LoginProvider();
 
   TextEditingController emailcontroller = new TextEditingController();
   TextEditingController passwordcontroller = new TextEditingController();
+  TextEditingController forgorPassword = new TextEditingController();
 
   @override
   void initState() {
@@ -40,56 +42,106 @@ class _SignInPagesState extends State<SignInPages> {
             : SafeArea(
                 child: Container(
                   height: MediaQuery.of(context).size.height,
-                  // decoration: BoxDecoration(
-                  //     gradient: LinearGradient(colors: [
-                  //   Colors.blue.shade300,
-                  //   Colors.green.shade200
-                  // ])),
                   child: SingleChildScrollView(
                     child: Center(
                       child: Form(
                         key: formkey,
                         child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 30, vertical: 50.0),
-                          color: Colors.white30,
-                          width: double.infinity,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              _logo(),
-                              SizedBox(
-                                height: 50.0,
-                              ),
-                              _logoText(),
-                              _inputFlied(
-                                  Icon(
-                                    Icons.person_outline,
-                                    size: 30,
-                                    color: Color(0xffA6B0BD),
-                                  ),
-                                  "Usuario",
-                                  false,
-                                  emailcontroller),
-                              _inputFlied(
-                                  Icon(
-                                    Icons.lock_outline,
-                                    size: 30,
-                                    color: Color(0xffA6B0BD),
-                                  ),
-                                  "Contraseña",
-                                  true,
-                                  passwordcontroller),
-                              _loginBtn()
-                            ],
-                          ),
-                        ),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 50.0),
+                            color: Colors.white30,
+                            width: double.infinity,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                _logo(),
+                                SizedBox(
+                                  height: 50.0,
+                                ),
+                                isRecordarClave
+                                    ? formRecoredarClave()
+                                    : formIniciarSesion()
+                              ],
+                            )),
                       ),
                     ),
                   ),
                 ),
               ));
+  }
+
+  Widget formRecoredarClave() {
+    return Column(
+      children: [
+        _inputFlied(
+            Icon(
+              Icons.person_outline,
+              size: 30,
+              color: Color(0xffA6B0BD),
+            ),
+            "Usuario",
+            false,
+            forgorPassword),
+        _loginBtn("Enviar contraseña", () async {
+          if (forgorPassword.text != '') {
+            ResponseDto response =
+                await authMethod.enviarClaveCorreo(forgorPassword.text);
+
+            if (response.codigo > 0)
+              showAlertDialog(context, "Recordar contraseña",
+                  "Se envió la contraseña correctamente");
+            else
+              showAlertDialog(
+                  context, "Recordar contraseña", "No se encontro el usuario");
+          }
+        }, false),
+        _loginBtn("Regresar", () {
+          setState(() {
+            isRecordarClave = false;
+          });
+        }, true),
+        SizedBox(
+          height: 40,
+        ),
+        Text(
+          'Se enviara la contraseña al correo registrado por el colegio.',
+          style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w400,
+              color: Utilities.hexToColor('#00AFF0')),
+        ),
+      ],
+    );
+  }
+
+  Widget formIniciarSesion() {
+    return Column(
+      children: [
+        _inputFlied(
+            Icon(
+              Icons.person_outline,
+              size: 30,
+              color: Color(0xffA6B0BD),
+            ),
+            "Usuario",
+            false,
+            emailcontroller),
+        _inputFlied(
+            Icon(
+              Icons.lock_outline,
+              size: 30,
+              color: Color(0xffA6B0BD),
+            ),
+            "Contraseña",
+            true,
+            passwordcontroller),
+        _loginBtn("Ingresar", () {
+          sigmMe(context);
+        }, false),
+        recordarClave()
+      ],
+    );
   }
 
   void showAlertDialog(BuildContext context, String header, String msn) {
@@ -145,8 +197,27 @@ class _SignInPagesState extends State<SignInPages> {
     }
   }
 
-  Widget _logoText() {
-    return Container();
+  Widget recordarClave() {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          isRecordarClave = true;
+        });
+      },
+      child: Container(
+        padding: EdgeInsets.only(top: 20.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'recordar contraseña',
+              style: TextStyle(color: Utilities.hexToColor('#00AFF0')),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _logo() {
@@ -195,41 +266,35 @@ class _SignInPagesState extends State<SignInPages> {
     );
   }
 
-  Widget _loginBtn() {
+  Widget _loginBtn(String texto, Function ontap, bool isdefault) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(top: 20.0),
+      margin: EdgeInsets.only(top: 10.0),
       decoration: BoxDecoration(
           gradient: LinearGradient(
               end: Alignment.bottomRight,
               begin: Alignment.topLeft,
-              colors: [
-                Utilities.hexToColor('#6CCEF4'),
-                Utilities.hexToColor('#00AFF0')
-              ]),
+              colors: isdefault
+                  ? [Colors.black12, Colors.black12]
+                  : [
+                      Utilities.hexToColor('#6CCEF4'),
+                      Utilities.hexToColor('#00AFF0')
+                    ]),
           borderRadius: BorderRadius.all(Radius.circular(50)),
-          boxShadow: [
-            BoxShadow(
-                blurRadius: 10,
-                offset: Offset(0, 5),
-                spreadRadius: 0,
-                color: Color(0x60008FFF))
-          ],
-          color: Color(0xff008FFF)),
+          color: isdefault ? Colors.red : Color(0xff008FFF)),
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 8.0),
+        margin: EdgeInsets.symmetric(vertical: 5.0),
         child: TextButton(
             onPressed: () {
-              sigmMe(context);
+              ontap();
             },
             child: Text(
-              'Ingresar',
-              style: GoogleFonts.montserrat(
-                  textStyle: TextStyle(
-                      fontSize: 18,
-                      letterSpacing: 3,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white)),
+              texto,
+              style: TextStyle(
+                  fontSize: 18,
+                  letterSpacing: 2,
+                  fontWeight: FontWeight.w400,
+                  color: isdefault ? Colors.black : Colors.white),
             )),
       ),
     );

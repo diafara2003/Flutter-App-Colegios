@@ -77,18 +77,19 @@ class _CambiarClavePagesState extends State<CambiarClavePages> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 10.0,
-                ),
-                Container(
-                  padding: EdgeInsets.only(top: 10.0),
-                  child: Text('Cambiar Contraseña',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 30.0)),
-                ),
+                // SizedBox(
+                //   height: 10.0,
+                // ),
+                // Container(
+                //   padding: EdgeInsets.only(top: 10.0),
+                //   child: Text('Cambiar Contraseña',
+                //       style: TextStyle(
+                //           fontWeight: FontWeight.bold, fontSize: 30.0)),
+                // ),
+                _logo(),
                 Divider(),
                 SizedBox(
-                  height: 20.0,
+                  height: 50.0,
                 ),
                 textPassword("Nueva contraseña", passwordController),
                 textPassword("Repetir contraseña", newPasswordController),
@@ -99,6 +100,16 @@ class _CambiarClavePagesState extends State<CambiarClavePages> {
         ),
       ),
     );
+  }
+
+  Widget _logo() {
+    return Container(
+        margin: EdgeInsets.only(top: 40),
+        child: Image.asset(
+          'images/login.png',
+          width: 360,
+          fit: BoxFit.cover,
+        ));
   }
 
   Widget _loginBtn() {

@@ -1,4 +1,4 @@
-import 'package:autraliano/helper/utilities.dart';
+import 'package:autraliano/models/destinatarios_model.dart';
 import 'package:autraliano/models/message_details_models.dart';
 import 'package:autraliano/models/sent_to_models.dart';
 import 'package:autraliano/pages/common/common_message.dart';
@@ -73,67 +73,29 @@ class _ChatEnviadosPagesState extends State<ChatEnviadosPages> {
 
     if (_lst.length > 2) {
       return ExpandablePanel(
-        header: Wrap(children: textoBurbuja(_lst.take(2).toList())),
+        header: Wrap(children: uiDestinatario(_lst.take(2).toList())),
         collapsed: Container(),
-        expanded: Wrap(children: textoBurbuja(_lst.sublist(2, _lst.length))),
+        expanded: Wrap(children: uiDestinatario(_lst.sublist(2, _lst.length))),
       );
     } else
-      return Wrap(children: textoBurbuja(_lst));
+      return Wrap(children: uiDestinatario(_lst));
   }
 
-  List<Widget> textoBurbuja(List<SentToModels> _lst) {
+  List<Widget> uiDestinatario(List<SentToModels> _lst) {
     List<Widget> _objLst = [];
 
     _lst.forEach((element) {
-      _objLst.add(FittedBox(
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.black12,
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(30.0),
-                bottomRight: Radius.circular(30.0),
-                topLeft: Radius.circular(40.0),
-                bottomLeft: Radius.circular(40.0)),
-          ),
-          margin: EdgeInsets.only(right: 5.0, top: 2.0, bottom: 2.0),
-          padding: EdgeInsets.only(
-              right: element.tipo == -99 ? 0 : 5.0, bottom: 2.0),
-          child: Row(children: [
-            Container(
-              padding: EdgeInsets.only(right: 5.0),
-              //  alignment: Alignment.topLeft,
-              child: CircleAvatar(
-                backgroundColor: Utilities.hexToColor(element.bg),
-                //  backgroundColor: Colors.transparent,
-                radius: 15.0,
-                child: Text(
-                  Utilities.inicialesUsuario(element.nombre, element.apellido),
-                  style: TextStyle(color: Colors.white70, fontSize: 14.0),
-                ),
-              ),
-            ),
-            if (element.tipo != -99)
-              Container(
-                  // padding: EdgeInsets.only(left: 2.0),
-                  child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('${element.nombre} ${element.apellido}',
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 14.0,
-                          color: Utilities.hexToColor(element.bg))),
-                  if (element.ocupacion.isNotEmpty)
-                    Text(
-                      "(${element.ocupacion})",
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: Colors.black54, fontSize: 11.0),
-                    )
-                ],
-              )),
-          ]),
-        ),
-      ));
+      _objLst.add(textoBurbujaEnviados(new DestinatarioModel(
+          curDescripcion: element.ocupacion,
+          grEnColorBurbuja: '',
+          grEnColorObs: '',
+          grEnColorRgb: element.bg,
+          graDescripcion: '',
+          idEst: element.id,
+          perApellidos: element.apellido,
+          perId: element.id,
+          perNombres: element.nombre,
+          tipo: element.tipo)));
     });
 
     return _objLst;

@@ -1,4 +1,4 @@
-package com.example.autraliano
+package com.comunicate.autraliano
 
 import io.flutter.embedding.android.FlutterActivity
 

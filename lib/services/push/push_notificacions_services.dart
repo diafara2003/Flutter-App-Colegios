@@ -1,6 +1,7 @@
 //sha-1 4C:43:1B:AB:F6:3B:D4:52:4D:0F:1F:FD:DB:84:92:B0:13:12:00:AC
 //p8 Key ID:U96GA292JH
 import 'dart:async';
+import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -43,16 +44,18 @@ class PushNotificacionService {
   }
 
   static requestPermission() async {
-    NotificationSettings _settings = await messaing.requestPermission(
-        alert: true,
-        announcement: true,
-        badge: true,
-        carPlay: false,
-        criticalAlert: false,
-        provisional: false,
-        sound: true);
+    if (Platform.isIOS) {
+      NotificationSettings _settings = await messaing.requestPermission(
+          alert: true,
+          announcement: true,
+          badge: true,
+          carPlay: false,
+          criticalAlert: false,
+          provisional: false,
+          sound: true);
 
-    print("status ${_settings.authorizationStatus}");
+      print("status ${_settings.authorizationStatus}");
+    }
   }
 
   static Future initializeApp() async {

@@ -30,11 +30,11 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Esta aplicaciòn requiere el uso de la camara</string>
+	<string>Esta aplicación requiere el uso de la camara para poder tomar fotos y  enviarlas dentro de un mensaje.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Esta aplicaciòn no requiere el uso del microfono</string>
+	<string>Esta aplicación requiere el del microfono</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Esta aplicacion requiere acceso a las fotos de la biblioteca</string>
+	<string>Esta aplicación requiere acceso a la galeria de imagenes para poder tomar seleccionar una foto y enviarlas dentro de un mensaje.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

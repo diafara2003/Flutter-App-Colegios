@@ -116,6 +116,7 @@ class _HomeMessagesPagesState extends State<HomeMessagesPages> {
                           ),
                         ),
                         expand: true,
+                        barrierColor: Colors.black.withOpacity(0.4),
                       );
                     },
                   ),
